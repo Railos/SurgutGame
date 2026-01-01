@@ -1,0 +1,5 @@
+*.SDF.asset binary
+*.Fallback.asset binary
+*SDF*.asset binary
+*Fallback*.asset binary
+*.asset binary
