@@ -11,6 +11,7 @@ public abstract class Weapon : MonoBehaviour
     public bool holdToShoot;
     public bool isShooting;
     public LayerMask hitLayers;
+    public Recoil recoilScript;
 
     private void Start()
     {
@@ -38,6 +39,7 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void Shoot()
     {
+        if (recoilScript != null) recoilScript.RecoilFire();
         readyToShoot = false;
         Invoke(nameof(WaitUntilNextShot), waitUntilNextShot);
     }
