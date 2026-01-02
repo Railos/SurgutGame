@@ -37,31 +37,31 @@ MonoBehaviour:
     m_Value: 0.2
   noiseWeight:
     m_OverrideState: 1
-    m_Value: 0.2
+    m_Value: 0
   screenBendX:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 5
   screenBendY:
     m_OverrideState: 1
-    m_Value: 3
+    m_Value: 5
   vignetteAmount:
     m_OverrideState: 1
-    m_Value: 0.78
+    m_Value: 3.9
   vignetteSize:
     m_OverrideState: 1
-    m_Value: 1.99
+    m_Value: 0.02
   vignetteRounding:
     m_OverrideState: 1
-    m_Value: 5.26
+    m_Value: 2.85
   vignetteSmoothing:
     m_OverrideState: 1
-    m_Value: 0.35
+    m_Value: 1.27
   scanlinesDensity:
     m_OverrideState: 1
-    m_Value: 200
+    m_Value: 174.4
   scanlinesSpeed:
     m_OverrideState: 1
-    m_Value: 200
+    m_Value: 174.4
   noiseAmount:
     m_OverrideState: 1
     m_Value: 250
@@ -546,13 +546,13 @@ MonoBehaviour:
     m_Value: 1
   ditherThreshold:
     m_OverrideState: 1
-    m_Value: 3.53
+    m_Value: 2.21
   ditherStrength:
     m_OverrideState: 1
-    m_Value: 1.37
+    m_Value: 0.13
   ditherScale:
     m_OverrideState: 1
-    m_Value: 4.67
+    m_Value: 0.93
 --- !u!114 &-226738432165765841
 MonoBehaviour:
   m_ObjectHideFlags: 3
