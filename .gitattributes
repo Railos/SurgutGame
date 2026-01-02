@@ -3,3 +3,7 @@
 *SDF*.asset binary
 *Fallback*.asset binary
 *.asset binary
+
+*.unity merge=unityyamlmerge
+*.prefab merge=unityyamlmerge
+*.asset merge=unityyamlmergegit mergetool
