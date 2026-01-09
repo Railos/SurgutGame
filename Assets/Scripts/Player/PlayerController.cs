@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     public float jumpForce = 12f;
     public float airMultiplier = 0.4f;
 
+    [Header("Jumping")]
+    [SerializeField] private int maxJumpCount = 3;
+
     [Header("Jumping Gravity (The Snappy Part)")]
     public float fallMultiplier = 2.5f; // Higher = heavier fall (try 2.5 to 3.5)
     public float lowJumpMultiplier = 2f; // For variable jump height (light tap = short hop)
@@ -34,11 +37,14 @@ public class PlayerController : MonoBehaviour
     public bool isDashing;
     Rigidbody rb;
     Vector2 moveInput;
+    int remainingJumps;
+    bool wasGrounded;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        remainingJumps = maxJumpCount;
         
         if (moveAction != null) moveAction.action.Enable();
         if (jumpAction != null) jumpAction.action.Enable();
@@ -49,12 +55,19 @@ public class PlayerController : MonoBehaviour
         // 1. Check Ground
         isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
 
+        if (isGrounded && !wasGrounded)
+        {
+            remainingJumps = maxJumpCount;
+        }
+        wasGrounded = isGrounded;
+
         // 2. Read Input
         moveInput = moveAction.action.ReadValue<Vector2>();
 
-        if (jumpAction.action.WasPressedThisFrame() && isGrounded)
+        if (jumpAction.action.WasPressedThisFrame() && remainingJumps > 0)
         {
             Jump();
+            remainingJumps--;
         }
 
         SpeedControl();

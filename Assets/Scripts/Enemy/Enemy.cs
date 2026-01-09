@@ -6,6 +6,15 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] float maxHealth = 100f;
     private float currentHealth;
 
+    [Header("Blood")]
+    [SerializeField] GameObject bloodSpatterPrefab;
+    [SerializeField] bool spawnBloodOnHit = true;
+    [SerializeField] bool spawnBloodOnDeath = true;
+    [SerializeField] LayerMask bloodSpatterFloorLayers = ~0;
+    [SerializeField] float bloodSpatterRaycastHeight = 1f;
+    [SerializeField] float bloodSpatterRaycastDistance = 5f;
+    [SerializeField] float bloodSpatterSurfaceOffset = 0.01f;
+
     protected abstract class EnemyState
     {
         protected readonly Enemy enemy;
@@ -118,8 +127,18 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         currentHealth -= amount;
 
+        if (spawnBloodOnHit)
+        {
+            SpawnBloodSpatter();
+        }
+
         if (currentHealth <= 0)
         {
+            if (spawnBloodOnDeath)
+            {
+                SpawnBloodSpatter();
+            }
+
             Die();
         }
     }
@@ -128,6 +147,29 @@ public class Enemy : MonoBehaviour, IDamageable
     {
         Debug.Log($"{name} died!");
         Destroy(gameObject); 
+    }
+
+    private void SpawnBloodSpatter()
+    {
+        if (bloodSpatterPrefab == null)
+        {
+            return;
+        }
+
+        Vector3 origin = transform.position + Vector3.up * bloodSpatterRaycastHeight;
+        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, bloodSpatterRaycastDistance, bloodSpatterFloorLayers, QueryTriggerInteraction.Ignore))
+        {
+            Quaternion baseRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+            Quaternion randomRotation = Quaternion.AngleAxis(Random.Range(0f, 360f), hit.normal);
+            Vector3 spawnPosition = hit.point + hit.normal * bloodSpatterSurfaceOffset;
+            GameObject spatter = Instantiate(bloodSpatterPrefab, spawnPosition, randomRotation * baseRotation);
+
+            BloodSpatter spatterComponent = spatter.GetComponent<BloodSpatter>();
+            if (spatterComponent != null)
+            {
+                spatterComponent.SetSurfaceNormal(hit.normal);
+            }
+        }
     }
 
     protected virtual EnemyState CreateRootState()

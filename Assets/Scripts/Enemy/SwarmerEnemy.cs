@@ -19,11 +19,21 @@ public class SwarmerEnemy : Enemy
     [SerializeField, Range(0f, 1f)] float avoidanceStrength = 0.65f;
     [SerializeField] LayerMask avoidanceLayers;
 
+    [Header("Attack")]
+    [SerializeField] float attackRange = 1.75f;
+    [SerializeField] float attackDamage = 10f;
+    [SerializeField] float attackCooldown = 0.75f;
+    [SerializeField] LayerMask attackLayers;
+    [SerializeField] string attackTrigger = "Attack";
+
     Rigidbody rb;
+    Animator animator;
+    float nextAttackTime;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
         TryResolvePlayer();
     }
 
@@ -80,6 +90,51 @@ public class SwarmerEnemy : Enemy
         }
 
         return true;
+    }
+
+    private bool IsPlayerInAttackRange()
+    {
+        if (playerTarget == null)
+        {
+            return false;
+        }
+
+        Vector3 toPlayer = playerTarget.position - transform.position;
+        float sqrDistance = toPlayer.sqrMagnitude;
+        return sqrDistance <= attackRange * attackRange;
+    }
+
+    private void TryAttack()
+    {
+        if (Time.time < nextAttackTime)
+        {
+            return;
+        }
+
+        nextAttackTime = Time.time + attackCooldown;
+
+        if (animator != null && !string.IsNullOrEmpty(attackTrigger))
+        {
+            animator.SetTrigger(attackTrigger);
+        }
+
+        Vector3 origin = transform.position + Vector3.up * eyeHeight;
+        Vector3 toPlayer = (playerTarget.position - origin);
+        float distance = toPlayer.magnitude;
+        if (distance <= 0.001f)
+        {
+            return;
+        }
+
+        Vector3 direction = toPlayer / distance;
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, attackRange, attackLayers, QueryTriggerInteraction.Ignore))
+        {
+            IDamageable damageable = hit.collider.GetComponentInParent<IDamageable>();
+            if (damageable != null)
+            {
+                damageable.TakeDamage(attackDamage);
+            }
+        }
     }
 
     private void MoveTowardsPlayer()
@@ -164,12 +219,50 @@ public class SwarmerEnemy : Enemy
             if (!owner.CanSeePlayer())
             {
                 SwitchState(new IdleState(owner));
+                return;
+            }
+
+            if (owner.IsPlayerInAttackRange())
+            {
+                SwitchState(new AttackState(owner));
             }
         }
 
         protected override void OnFixedUpdate()
         {
             owner.MoveTowardsPlayer();
+        }
+    }
+
+    private sealed class AttackState : EnemyState
+    {
+        private readonly SwarmerEnemy owner;
+
+        public AttackState(SwarmerEnemy enemy) : base(enemy)
+        {
+            owner = enemy;
+        }
+
+        protected override void OnEnter()
+        {
+            owner.nextAttackTime = 0f;
+        }
+
+        protected override void OnUpdate()
+        {
+            if (!owner.CanSeePlayer())
+            {
+                SwitchState(new IdleState(owner));
+                return;
+            }
+
+            if (!owner.IsPlayerInAttackRange())
+            {
+                SwitchState(new ChaseState(owner));
+                return;
+            }
+
+            owner.TryAttack();
         }
     }
 }
