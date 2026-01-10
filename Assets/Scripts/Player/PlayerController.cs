@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     // References
     public Transform orientation;
+    [SerializeField] private WallJump wallJump;
     public bool isDashing;
     Rigidbody rb;
     Vector2 moveInput;
@@ -45,6 +46,10 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         remainingJumps = maxJumpCount;
+        if (wallJump == null)
+        {
+            wallJump = GetComponent<WallJump>();
+        }
         
         if (moveAction != null) moveAction.action.Enable();
         if (jumpAction != null) jumpAction.action.Enable();
@@ -64,10 +69,18 @@ public class PlayerController : MonoBehaviour
         // 2. Read Input
         moveInput = moveAction.action.ReadValue<Vector2>();
 
-        if (jumpAction.action.WasPressedThisFrame() && remainingJumps > 0)
+        if (jumpAction.action.WasPressedThisFrame())
         {
-            Jump();
-            remainingJumps--;
+            if (wallJump != null && wallJump.TryWallJump())
+            {
+                return;
+            }
+
+            if (remainingJumps > 0)
+            {
+                Jump();
+                remainingJumps--;
+            }
         }
 
         SpeedControl();

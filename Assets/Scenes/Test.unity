@@ -14,7 +14,7 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
-  m_Fog: 1
+  m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
   m_FogDensity: 0.085
@@ -131,6 +131,7 @@ GameObject:
   - component: {fileID: 24137199}
   - component: {fileID: 24137201}
   - component: {fileID: 24137207}
+  - component: {fileID: 24137208}
   - component: {fileID: 24137202}
   - component: {fileID: 24137203}
   - component: {fileID: 24137204}
@@ -224,7 +225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   moveAction: {fileID: 1615688309}
   jumpAction: {fileID: 2085250187}
-  moveSpeed: 5
+  moveSpeed: 7
   groundDrag: 6
   jumpForce: 7
   airMultiplier: 0.8
@@ -237,6 +238,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   maxSlopeAngle: 45
   orientation: {fileID: 1166371445}
+  wallJump: {fileID: 0}
   isDashing: 0
 --- !u!114 &24137203
 MonoBehaviour:
@@ -274,7 +276,7 @@ MonoBehaviour:
   controller: {fileID: 24137202}
   bobAmplitude: 0.02
   bobFrequency: 20
-  tiltAmount: 1.5
+  tiltAmount: 0.8
   tiltSpeed: 10
 --- !u!114 &24137205
 MonoBehaviour:
@@ -290,10 +292,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDash
   dashAction: {fileID: 1411904027}
   moveAction: {fileID: 136630139}
-  dashForce: 25
+  dashForce: 30
   dashDuration: 0.2
   dashCooldown: 1
-  orientation: {fileID: 1503746061}
+  orientation: {fileID: 1166371445}
 --- !u!114 &24137206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,6 +329,36 @@ MonoBehaviour:
   maxHealth: 100
   destroyOnDeath: 0
   deathEffect: {fileID: 1168117902}
+--- !u!114 &24137208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24137198}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ec00399bb2805479113d934e1f1a5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WallJump
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  wallCheckDistance: 0.7
+  wallCheckHeightOffset: 0.9
+  useForwardWallChecks: 1
+  wallStickTime: 0.5
+  wallSlideSpeed: 2.5
+  wallJumpForce: 70
+  wallJumpUpForce: 10
+  wallJumpPushDuration: 0.13
+  wallJumpCooldown: 0.2
+  groundCheckDistance: 0.2
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 0
+  playerController: {fileID: 0}
+  wallCheckTransform: {fileID: 0}
 --- !u!114 &73533282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,6 +387,7 @@ GameObject:
   - component: {fileID: 108056131}
   - component: {fileID: 108056130}
   - component: {fileID: 108056129}
+  - component: {fileID: 108056135}
   m_Layer: 0
   m_Name: mark (13)
   m_TagString: Untagged
@@ -418,15 +451,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -529,6 +557,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &108056135
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108056128}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &108528957
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,9 +624,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06619f35fa548354a984c7a6d87e5a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Recoil
-  snappiness: 28
-  kickUp: 14
-  returnSpeed: 6
+  snappiness: 40
+  kickUp: 52
+  returnSpeed: 18
 --- !u!1 &135435844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1068,6 +1118,7 @@ GameObject:
   - component: {fileID: 316993050}
   - component: {fileID: 316993049}
   - component: {fileID: 316993048}
+  - component: {fileID: 316993054}
   m_Layer: 0
   m_Name: mark (12)
   m_TagString: Untagged
@@ -1131,15 +1182,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -1242,6 +1288,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &316993054
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316993047}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &318157197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1317,6 +1385,7 @@ GameObject:
   - component: {fileID: 322605378}
   - component: {fileID: 322605377}
   - component: {fileID: 322605376}
+  - component: {fileID: 322605382}
   m_Layer: 0
   m_Name: mark (16)
   m_TagString: Untagged
@@ -1380,15 +1449,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -1491,6 +1555,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &322605382
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 322605375}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &323620693
 GameObject:
   m_ObjectHideFlags: 0
@@ -1536,9 +1622,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06619f35fa548354a984c7a6d87e5a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Recoil
-  snappiness: 28
-  kickUp: 14
-  returnSpeed: 6
+  snappiness: 40
+  kickUp: 52
+  returnSpeed: 18
 --- !u!1 &326951639
 GameObject:
   m_ObjectHideFlags: 0
@@ -1802,6 +1888,7 @@ GameObject:
   - component: {fileID: 371704096}
   - component: {fileID: 371704095}
   - component: {fileID: 371704094}
+  - component: {fileID: 371704100}
   m_Layer: 0
   m_Name: mark (15)
   m_TagString: Untagged
@@ -1865,15 +1952,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -1976,6 +2058,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &371704100
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371704093}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &397818719
 GameObject:
   m_ObjectHideFlags: 0
@@ -2526,6 +2630,7 @@ GameObject:
   - component: {fileID: 569781838}
   - component: {fileID: 569781837}
   - component: {fileID: 569781836}
+  - component: {fileID: 569781842}
   m_Layer: 0
   m_Name: mark (5)
   m_TagString: Untagged
@@ -2589,15 +2694,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -2700,6 +2800,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &569781842
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569781835}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &575173327
 GameObject:
   m_ObjectHideFlags: 0
@@ -2804,6 +2926,7 @@ GameObject:
   - component: {fileID: 609566277}
   - component: {fileID: 609566276}
   - component: {fileID: 609566275}
+  - component: {fileID: 609566281}
   m_Layer: 0
   m_Name: mark (2)
   m_TagString: Untagged
@@ -2867,15 +2990,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -2978,6 +3096,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &609566281
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 609566274}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &616147257
 GameObject:
   m_ObjectHideFlags: 0
@@ -3256,6 +3396,218 @@ Transform:
   - {fileID: 1502835916}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &720457125
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 720457126}
+  - component: {fileID: 720457131}
+  - component: {fileID: 720457130}
+  - component: {fileID: 720457129}
+  - component: {fileID: 720457127}
+  - component: {fileID: 720457132}
+  - component: {fileID: 720457133}
+  m_Layer: 9
+  m_Name: kirill
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &720457126
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720457125}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -2.04, y: 2.06, z: -8.050001}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &720457127
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720457125}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 3
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 112
+  m_CollisionDetection: 2
+--- !u!136 &720457129
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720457125}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &720457130
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720457125}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 3dee9d553108ff6459453f1118654630, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &720457131
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720457125}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &720457132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720457125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ecf1d1c201772a4595e8b3126278868, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RangedEnemy
+  maxHealth: 100
+  bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  spawnBloodOnHit: 1
+  spawnBloodOnDeath: 1
+  bloodSpatterFloorLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  bloodSpatterRaycastHeight: 1
+  bloodSpatterRaycastDistance: 5
+  bloodSpatterSurfaceOffset: 0.01
+  engageDistance: 18
+  disengageDistance: 22
+  playerTarget: {fileID: 0}
+  preferredDistance: 12
+  distanceTolerance: 1.5
+  turnSpeed: 360
+  moveSpeed: 4.5
+  agentAcceleration: 12
+  agentStoppingDistance: 0
+  navMeshSampleRadius: 1.5
+  burstRange: 20
+  shotsPerBurst: 4
+  timeBetweenShots: 0.1
+  burstCooldown: 1.25
+  pelletDamage: 30
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  firePoint: {fileID: 0}
+  fireHeight: 0.5
+  bulletPrefab: {fileID: 1779745550054950207, guid: b37cc4aa0dfdc934eb7989a6f6ba8d8c, type: 3}
+  pelletSpeed: 18
+  pelletLifetime: 3
+  impactForce: 6
+--- !u!195 &720457133
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 720457125}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &758300155
 GameObject:
   m_ObjectHideFlags: 0
@@ -3580,6 +3932,7 @@ GameObject:
   - component: {fileID: 937841098}
   - component: {fileID: 937841097}
   - component: {fileID: 937841096}
+  - component: {fileID: 937841102}
   m_Layer: 0
   m_Name: mark (7)
   m_TagString: Untagged
@@ -3643,15 +3996,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -3754,6 +4102,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &937841102
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 937841095}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &954402320
 GameObject:
   m_ObjectHideFlags: 0
@@ -4006,6 +4376,7 @@ GameObject:
   - component: {fileID: 1130072126}
   - component: {fileID: 1130072125}
   - component: {fileID: 1130072124}
+  - component: {fileID: 1130072130}
   m_Layer: 0
   m_Name: mark (4)
   m_TagString: Untagged
@@ -4069,15 +4440,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -4180,6 +4546,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &1130072130
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130072123}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1140219062
 GameObject:
   m_ObjectHideFlags: 0
@@ -4210,6 +4598,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1845935996}
+  - {fileID: 1451682216}
   - {fileID: 1497743448}
   - {fileID: 222428620}
   - {fileID: 758300156}
@@ -4554,6 +4943,7 @@ GameObject:
   - component: {fileID: 1177981441}
   - component: {fileID: 1177981440}
   - component: {fileID: 1177981439}
+  - component: {fileID: 1177981445}
   m_Layer: 0
   m_Name: mark (3)
   m_TagString: Untagged
@@ -4617,15 +5007,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -4728,6 +5113,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &1177981445
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1177981438}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1225725751
 GameObject:
   m_ObjectHideFlags: 0
@@ -4773,9 +5180,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06619f35fa548354a984c7a6d87e5a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Recoil
-  snappiness: 30
-  kickUp: 50
-  returnSpeed: 10
+  snappiness: 65
+  kickUp: 90
+  returnSpeed: 12
 --- !u!1 &1283276562
 GameObject:
   m_ObjectHideFlags: 0
@@ -4902,6 +5309,7 @@ GameObject:
   - component: {fileID: 1367768215}
   - component: {fileID: 1367768214}
   - component: {fileID: 1367768213}
+  - component: {fileID: 1367768219}
   m_Layer: 0
   m_Name: mark (11)
   m_TagString: Untagged
@@ -4965,15 +5373,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -5076,6 +5479,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &1367768219
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367768212}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &1411904027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5104,6 +5529,7 @@ GameObject:
   - component: {fileID: 1441195318}
   - component: {fileID: 1441195317}
   - component: {fileID: 1441195316}
+  - component: {fileID: 1441195322}
   m_Layer: 0
   m_Name: mark (8)
   m_TagString: Untagged
@@ -5167,15 +5593,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -5278,6 +5699,157 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &1441195322
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441195315}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!1 &1451682215
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1451682216}
+  - component: {fileID: 1451682220}
+  - component: {fileID: 1451682219}
+  - component: {fileID: 1451682218}
+  - component: {fileID: 1451682217}
+  m_Layer: 11
+  m_Name: wwww (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1451682216
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451682215}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -6.02669, y: -0.50000167, z: -20.56}
+  m_LocalScale: {x: 46.51936, y: 1, z: 40.85}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1140219063}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!208 &1451682217
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451682215}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!65 &1451682218
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451682215}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &1451682219
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451682215}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a78df3ff1c4aab14190e9397afc7d3b6, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1451682220
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1451682215}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1497743447
 GameObject:
   m_ObjectHideFlags: 0
@@ -5404,6 +5976,7 @@ GameObject:
   - component: {fileID: 1502835913}
   - component: {fileID: 1502835912}
   - component: {fileID: 1502835911}
+  - component: {fileID: 1502835917}
   m_Layer: 0
   m_Name: mark (17)
   m_TagString: Untagged
@@ -5467,15 +6040,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -5578,6 +6146,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &1502835917
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502835910}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1503746060
 GameObject:
   m_ObjectHideFlags: 0
@@ -5750,6 +6340,7 @@ GameObject:
   - component: {fileID: 1615199215}
   - component: {fileID: 1615199214}
   - component: {fileID: 1615199213}
+  - component: {fileID: 1615199219}
   m_Layer: 0
   m_Name: mark (10)
   m_TagString: Untagged
@@ -5813,15 +6404,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -5924,6 +6510,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &1615199219
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1615199212}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!114 &1615688309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5952,6 +6560,7 @@ GameObject:
   - component: {fileID: 1623669613}
   - component: {fileID: 1623669612}
   - component: {fileID: 1623669611}
+  - component: {fileID: 1623669617}
   m_Layer: 0
   m_Name: mark (9)
   m_TagString: Untagged
@@ -6015,15 +6624,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -6126,6 +6730,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &1623669617
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1623669610}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1630067212
 GameObject:
   m_ObjectHideFlags: 0
@@ -6403,6 +7029,7 @@ GameObject:
   - component: {fileID: 1804486717}
   - component: {fileID: 1804486716}
   - component: {fileID: 1804486715}
+  - component: {fileID: 1804486721}
   m_Layer: 0
   m_Name: mark (14)
   m_TagString: Untagged
@@ -6466,15 +7093,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -6577,6 +7199,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &1804486721
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804486714}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &1845935992
 GameObject:
   m_ObjectHideFlags: 0
@@ -6589,7 +7233,8 @@ GameObject:
   - component: {fileID: 1845935995}
   - component: {fileID: 1845935994}
   - component: {fileID: 1845935993}
-  m_Layer: 0
+  - component: {fileID: 1845935997}
+  m_Layer: 10
   m_Name: wwww
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6689,6 +7334,38 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1140219063}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1845935997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1845935992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 1
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: bb0328655e99b774ebe093ac4f96e2a8, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &1854082403
 GameObject:
   m_ObjectHideFlags: 0
@@ -6905,6 +7582,7 @@ GameObject:
   - component: {fileID: 2016630351}
   - component: {fileID: 2016630350}
   - component: {fileID: 2016630349}
+  - component: {fileID: 2016630355}
   m_Layer: 0
   m_Name: mark (6)
   m_TagString: Untagged
@@ -6968,15 +7646,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -7079,6 +7752,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700871535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!195 &2016630355
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016630348}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &2073584343
 GameObject:
   m_ObjectHideFlags: 0
@@ -7462,6 +8157,7 @@ GameObject:
   - component: {fileID: 2448886671080883757}
   - component: {fileID: 9142352354207033705}
   - component: {fileID: 2335845546778402120}
+  - component: {fileID: 9142352354207033706}
   m_Layer: 0
   m_Name: mark
   m_TagString: Untagged
@@ -8509,15 +9205,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   playerTarget: {fileID: 24137200}
-  moveSpeed: 3
+  moveSpeed: 4
   stoppingDistance: 1.5
   turnSpeed: 360
-  avoidanceDistance: 4
-  avoidanceRadius: 0.35
-  avoidanceStrength: 1
-  avoidanceLayers:
-    serializedVersion: 2
-    m_Bits: 1
+  agentAcceleration: 12
   attackRange: 1.75
   attackDamage: 20
   attackCooldown: 0.75
@@ -8525,6 +9216,28 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   attackTrigger: Attack
+--- !u!195 &9142352354207033706
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1044412941380303226}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -8539,3 +9252,4 @@ SceneRoots:
   - {fileID: 4703569307146155114}
   - {fileID: 700871535}
   - {fileID: 671104110}
+  - {fileID: 720457126}

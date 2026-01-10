@@ -1,6 +1,7 @@
 using UnityEngine;
+using UnityEngine.AI;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class SwarmerEnemy : Enemy
 {
     [Header("Detection")]
@@ -14,10 +15,7 @@ public class SwarmerEnemy : Enemy
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float stoppingDistance = 1.5f;
     [SerializeField] float turnSpeed = 360f;
-    [SerializeField] float avoidanceDistance = 2f;
-    [SerializeField] float avoidanceRadius = 0.35f;
-    [SerializeField, Range(0f, 1f)] float avoidanceStrength = 0.65f;
-    [SerializeField] LayerMask avoidanceLayers;
+    [SerializeField] float agentAcceleration = 12f;
 
     [Header("Attack")]
     [SerializeField] float attackRange = 1.75f;
@@ -26,13 +24,18 @@ public class SwarmerEnemy : Enemy
     [SerializeField] LayerMask attackLayers;
     [SerializeField] string attackTrigger = "Attack";
 
-    Rigidbody rb;
+    NavMeshAgent agent;
     Animator animator;
     float nextAttackTime;
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = moveSpeed;
+        agent.acceleration = agentAcceleration;
+        agent.stoppingDistance = stoppingDistance;
+        agent.updateRotation = false;
+        agent.isStopped = true;
         animator = GetComponentInChildren<Animator>();
         TryResolvePlayer();
     }
@@ -137,7 +140,7 @@ public class SwarmerEnemy : Enemy
         }
     }
 
-    private void MoveTowardsPlayer()
+    private void FacePlayer()
     {
         if (playerTarget == null)
         {
@@ -145,41 +148,35 @@ public class SwarmerEnemy : Enemy
         }
 
         Vector3 toPlayer = playerTarget.position - transform.position;
-        Vector3 flatToPlayer = new Vector3(toPlayer.x, 0f, toPlayer.z);
-        float sqrDistance = flatToPlayer.sqrMagnitude;
-        if (sqrDistance <= stoppingDistance * stoppingDistance)
+        toPlayer.y = 0f;
+        if (toPlayer.sqrMagnitude < 0.0001f)
         {
             return;
         }
 
-        Vector3 direction = flatToPlayer.normalized;
-        direction = ApplyAvoidance(direction);
-        Vector3 nextPosition = transform.position + direction * moveSpeed * Time.fixedDeltaTime;
-        rb.MovePosition(nextPosition);
-
-        Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-        rb.MoveRotation(Quaternion.RotateTowards(rb.rotation, targetRotation, turnSpeed * Time.fixedDeltaTime));
+        Quaternion targetRotation = Quaternion.LookRotation(toPlayer.normalized, Vector3.up);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
     }
 
-    private Vector3 ApplyAvoidance(Vector3 direction)
+    private void UpdateChaseDestination()
     {
-        if (avoidanceDistance <= 0f || avoidanceRadius <= 0f)
+        if (playerTarget == null || !agent.isOnNavMesh)
         {
-            return direction;
+            return;
         }
 
-        Vector3 origin = transform.position + Vector3.up * 0.5f;
-        if (Physics.SphereCast(origin, avoidanceRadius, direction, out RaycastHit hit, avoidanceDistance, avoidanceLayers, QueryTriggerInteraction.Ignore))
+        agent.SetDestination(playerTarget.position);
+    }
+
+    private void StopAgent()
+    {
+        if (agent.isStopped)
         {
-            Vector3 steer = Vector3.ProjectOnPlane(hit.normal, Vector3.up).normalized;
-            if (steer.sqrMagnitude > 0.0001f)
-            {
-                Vector3 blended = Vector3.Slerp(direction, steer, avoidanceStrength);
-                return blended.normalized;
-            }
+            return;
         }
 
-        return direction;
+        agent.isStopped = true;
+        agent.ResetPath();
     }
 
     private sealed class IdleState : EnemyState
@@ -194,6 +191,7 @@ public class SwarmerEnemy : Enemy
         protected override void OnEnter()
         {
             owner.TryResolvePlayer();
+            owner.StopAgent();
         }
 
         protected override void OnUpdate()
@@ -225,12 +223,21 @@ public class SwarmerEnemy : Enemy
             if (owner.IsPlayerInAttackRange())
             {
                 SwitchState(new AttackState(owner));
+                return;
             }
+
+            owner.UpdateChaseDestination();
+            owner.FacePlayer();
         }
 
-        protected override void OnFixedUpdate()
+        protected override void OnEnter()
         {
-            owner.MoveTowardsPlayer();
+            owner.agent.isStopped = false;
+        }
+
+        protected override void OnExit()
+        {
+            owner.StopAgent();
         }
     }
 
@@ -246,6 +253,7 @@ public class SwarmerEnemy : Enemy
         protected override void OnEnter()
         {
             owner.nextAttackTime = 0f;
+            owner.StopAgent();
         }
 
         protected override void OnUpdate()
@@ -263,6 +271,7 @@ public class SwarmerEnemy : Enemy
             }
 
             owner.TryAttack();
+            owner.FacePlayer();
         }
     }
 }

@@ -37,6 +37,12 @@ public class PelletProjectile : MonoBehaviour
         {
             lifetime = lifeTime;
         }
+
+        CancelInvoke(nameof(DestroySelf));
+        if (lifetime > 0f)
+        {
+            Invoke(nameof(DestroySelf), lifetime);
+        }
     }
 
     public void SetVelocity(Vector3 velocity)

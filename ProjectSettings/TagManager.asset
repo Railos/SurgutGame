@@ -14,9 +14,9 @@ TagManager:
   - Weapon
   - Player
   - Bullet
-  - 
-  - 
-  - 
+  - Enemy
+  - Ground
+  - Wall
   - 
   - 
   - 
