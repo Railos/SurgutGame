@@ -2,43 +2,33 @@ using UnityEngine;
 
 public class Recoil : MonoBehaviour
 {
-    // References
+    public float snappiness = 6;
+    public float returnSpeed = 25;
+    
+    public float snappinessPos = 6;
+    public float returnSpeedPos = 25;
+
+    public Vector3 RecoilRotation = new Vector3(2f, 2f, 2f);
+    public float RecoilPositionX;
+
     private Vector3 currentRotation;
-    private Vector3 targetRotation;
+    private Vector3 currentPosition = Vector3.zero;
+    private Vector3 Rot;
+    private Vector3 Pos = Vector3.zero;
 
-    [Header("Settings")]
-    public float snappiness = 6f; // How fast it snaps up
-    public float kickUp = 2f;
-    public float returnSpeed = 2f; // How fast it returns to center
-
-    void Update()
+    private void FixedUpdate()
     {
-        // 1. Slerp target rotation back to zero (Restoring force)
-        targetRotation = Vector3.Lerp(targetRotation, Vector3.zero, returnSpeed * Time.deltaTime);
-        
-        // 2. Slerp current rotation to the target (Smoothing the kick)
-        currentRotation = Vector3.Slerp(currentRotation, targetRotation, snappiness * Time.deltaTime);
-        
-        // 3. Apply to Local Rotation
-        // We add this to whatever rotation the WeaponAnchor/Sway is already doing.
-        // NOTE: If this script is on the SAME object as WeaponSway, you might fight for control.
-        // Ideally, create a child "RecoilPivot" or use 'localRotation *= ...' carefully.
-        // For simplicity, let's assume this is a child of WeaponSway or applied additively.
-        transform.localRotation = Quaternion.Euler(currentRotation);
+        currentRotation = Vector3.Lerp(currentRotation, Vector3.zero, returnSpeed * Time.deltaTime);
+        currentPosition = Vector3.Lerp(currentPosition, Vector3.zero, returnSpeedPos * Time.deltaTime);
+        Rot = Vector3.Slerp(Rot, currentRotation, snappiness * Time.fixedDeltaTime);
+        Pos = Vector3.Slerp(Pos, currentPosition, snappinessPos * Time.fixedDeltaTime);
+        transform.localRotation = Quaternion.Euler(Rot);
+        transform.localPosition = Pos;
     }
 
     public void RecoilFire()
     {
-        // Define the Kick (Randomized)
-        // X: Pitch Up (Negative X is usually up in Unity if forward is Z, depends on your rig)
-        // Y: Yaw (Random Side to Side)
-        // Z: Tilt (Random twist)
-        
-        float recoilX = -kickUp; // Kick UP
-        float recoilY = Random.Range(-0.5f, 0.5f); // Random Side shake
-        float recoilZ = Random.Range(-0.3f, 0.3f); // Random Tilt
-
-        // Add to target (This allows recoil to stack/climb if you spam)
-        targetRotation += new Vector3(recoilX, recoilY, recoilZ);
+        currentRotation += new Vector3(-RecoilRotation.x, Random.Range(0f, RecoilRotation.y), Random.Range(-RecoilRotation.z, RecoilRotation.z));
+        currentPosition += new Vector3(RecoilPositionX, 0f, 0f);
     }
 }

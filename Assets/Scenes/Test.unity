@@ -625,8 +625,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Recoil
   snappiness: 40
-  kickUp: 52
   returnSpeed: 18
+  snappinessPos: 6
+  returnSpeedPos: 25
+  RecoilRotation: {x: 30, y: 15, z: 4}
+  RecoilPositionX: 0
 --- !u!1 &135435844
 GameObject:
   m_ObjectHideFlags: 0
@@ -1623,8 +1626,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Recoil
   snappiness: 40
-  kickUp: 52
   returnSpeed: 18
+  snappinessPos: 6
+  returnSpeedPos: 25
+  RecoilRotation: {x: 30, y: 15, z: 4}
+  RecoilPositionX: 0
 --- !u!1 &326951639
 GameObject:
   m_ObjectHideFlags: 0
@@ -5181,8 +5187,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Recoil
   snappiness: 65
-  kickUp: 90
   returnSpeed: 12
+  snappinessPos: 6
+  returnSpeedPos: 20
+  RecoilRotation: {x: 60, y: 12, z: 12}
+  RecoilPositionX: -1
 --- !u!1 &1283276562
 GameObject:
   m_ObjectHideFlags: 0
