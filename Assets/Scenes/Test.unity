@@ -610,6 +610,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3347199454540770358}
+  - {fileID: 822564920}
   m_Father: {fileID: 1630827371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &108528959
@@ -816,9 +817,9 @@ MonoBehaviour:
   pelletCount: 8
   pelletPrefab: {fileID: 1779745550054950207, guid: 204319e7ed066db4f91f00fe0ac6f47a, type: 3}
   muzzle: {fileID: 552109620}
-  pelletSpeed: 65
+  pelletSpeed: 86
   pelletLifetime: 1
-  spreadAngle: 5
+  spreadAngle: 4.5
   impactForce: 0.1
   ignoreColliders:
   - {fileID: 24137201}
@@ -1611,6 +1612,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2073584344}
+  - {fileID: 1180255583}
   m_Father: {fileID: 1630827371}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &323620695
@@ -2526,7 +2528,7 @@ Transform:
   m_GameObject: {fileID: 552109619}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4486, z: 0.8643}
+  m_LocalPosition: {x: -0.279, y: 0.573, z: -0.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3354,6 +3356,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &687939117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Player/AltFire
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_ActionId: 9c4941aa-4ed1-4c4c-bafb-c20e4a61c196
 --- !u!1 &700871534
 GameObject:
   m_ObjectHideFlags: 0
@@ -3812,6 +3828,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
   m_Asset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_ActionId: 351f2ccd-1f9f-44bf-9bec-d62ac5c5f408
+--- !u!1 &822564919
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 822564920}
+  m_Layer: 7
+  m_Name: MuzzlePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &822564920
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 822564919}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.4819, y: 0.2305, z: 0.4062}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 108528958}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &890450128
 GameObject:
   m_ObjectHideFlags: 0
@@ -5141,6 +5188,37 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!1 &1180255582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1180255583}
+  m_Layer: 7
+  m_Name: MuzzlePoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1180255583
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1180255582}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.546, y: 0.194, z: 0.4197}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 323620694}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1225725751
 GameObject:
   m_ObjectHideFlags: 0
@@ -6909,6 +6987,20 @@ MonoBehaviour:
     m_Bits: 4294967295
   recoilScript: {fileID: 0}
   range: 100
+  altFireAction: {fileID: 687939117}
+  boomerangPrefab: {fileID: 8816873035382615271, guid: 642b54fb89714af47a7bdee39c9a92c3, type: 3}
+  leftThrowOrigin: {fileID: 1180255583}
+  rightThrowOrigin: {fileID: 822564920}
+  returnTarget: {fileID: 24137200}
+  leftBerettaVisual: {fileID: 2073584343}
+  rightBerettaVisual: {fileID: 2682021705210721932}
+  throwSpeed: 23
+  returnSpeed: 26
+  throwMaxDistance: 20
+  catchDistance: 1
+  throwDamage: 20
+  throwImpactForce: 4
+  throwMaxLifetime: 3
   leftRecoil: {fileID: 323620695}
   rightRecoil: {fileID: 108528959}
   startWithLeft: 0
