@@ -359,6 +359,20 @@ MonoBehaviour:
     m_Bits: 0
   playerController: {fileID: 0}
   wallCheckTransform: {fileID: 0}
+--- !u!114 &32616095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc1515ab76e54f068e2f2207940fab32, type: 3}
+  m_Name: Player/AltFire
+  m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.InputActionReference
+  m_Asset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_ActionId: 9c4941aa-4ed1-4c4c-bafb-c20e4a61c196
 --- !u!114 &73533282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -814,6 +828,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   recoilScript: {fileID: 1225725753}
+  altFireAction: {fileID: 32616095}
   pelletCount: 8
   pelletPrefab: {fileID: 1779745550054950207, guid: 204319e7ed066db4f91f00fe0ac6f47a, type: 3}
   muzzle: {fileID: 552109620}
@@ -823,6 +838,10 @@ MonoBehaviour:
   impactForce: 0.1
   ignoreColliders:
   - {fileID: 24137201}
+  reloadInterval: 1
+  altFireDamageMultiplier: 1.25
+  altFireKnockbackForce: 24
+  playerRigidbody: {fileID: 24137199}
 --- !u!114 &188367091
 MonoBehaviour:
   m_ObjectHideFlags: 0
