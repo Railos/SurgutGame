@@ -450,14 +450,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -1190,14 +1196,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -1457,14 +1469,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -1964,14 +1982,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -2706,14 +2730,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -3002,14 +3032,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -3595,6 +3631,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RangedEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 0}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
@@ -3602,7 +3639,12 @@ MonoBehaviour:
     m_Bits: 4294967295
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 0.5
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   engageDistance: 18
   disengageDistance: 22
   playerTarget: {fileID: 0}
@@ -4053,14 +4095,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -4497,14 +4545,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -5064,14 +5118,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -5464,14 +5524,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -5684,14 +5750,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -6131,14 +6203,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -6495,14 +6573,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -6715,14 +6799,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -7198,14 +7288,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -7751,14 +7847,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
   maxHealth: 100
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
@@ -9267,7 +9369,7 @@ Transform:
   m_GameObject: {fileID: 1044412941380303226}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.96052, y: 1.56, z: -10.93416}
+  m_LocalPosition: {x: -0.96052, y: 1.56, z: -33.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9308,16 +9410,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41b21567ac59d77469a8ee07042c93ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwarmerEnemy
-  maxHealth: 100
+  maxHealth: 1000
   bloodSpatterPrefab: {fileID: 5080378413082279005, guid: eed8674b613e1634b8b503cd8673514c, type: 3}
+  bloodPuddlePrefab: {fileID: 5080378413082279005, guid: 0cee91c1555296847a422b886e3f3bc1, type: 3}
   spawnBloodOnHit: 1
   spawnBloodOnDeath: 1
   bloodSpatterFloorLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 3072
   bloodSpatterRaycastHeight: 1
   bloodSpatterRaycastDistance: 5
+  bloodSpatterRaycastCount: 3
+  bloodSpatterRaycastRadius: 2
+  bloodSpatterRaycastAngleJitter: 15
+  bloodSpatterSpawnHeight: 1
   bloodSpatterSurfaceOffset: 0.01
+  bloodPuddleLocalUp: {x: 0, y: 1, z: 0}
   viewDistance: 15
   viewAngle: 120
   eyeHeight: 1.2
