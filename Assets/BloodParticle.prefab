@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 2205173981002743440}
   - component: {fileID: 1323324664291837127}
   - component: {fileID: 1524107611145008454}
-  m_Layer: 0
+  - component: {fileID: -567531212697674763}
+  m_Layer: 12
   m_Name: BloodParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,8 +117,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 7
-      minScalar: 4
+      scalar: 17
+      minScalar: 15
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -611,7 +612,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 3
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3628,7 +3629,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -3797,15 +3798,15 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     minKillSpeed: 0
-    maxKillSpeed: 10000
-    radiusScale: 0.1
+    maxKillSpeed: 0
+    radiusScale: 0.001
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
-    maxCollisionShapes: 256
+      m_Bits: 3073
+    maxCollisionShapes: 512
     quality: 1
-    voxelSize: 0.5
-    collisionMessages: 0
+    voxelSize: 0.0001
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -4845,3 +4846,18 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &-567531212697674763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5080378413082279005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca625f3e97b1d6e439a90dc9d0e8b4e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BloodDirector
+  bloodParticleSystem: {fileID: 1323324664291837127}
+  decalPrefab: {fileID: 1172165435488944502, guid: 22afd9019db7a84468a3831e54d5b4e9, type: 3}
+  maxDecals: 200

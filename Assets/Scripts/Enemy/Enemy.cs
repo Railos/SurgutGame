@@ -11,15 +11,11 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] GameObject bloodPuddlePrefab;
     [SerializeField] bool spawnBloodOnHit = true;
     [SerializeField] bool spawnBloodOnDeath = true;
-    [SerializeField] LayerMask bloodSpatterFloorLayers = ~0;
-    [SerializeField] float bloodSpatterRaycastHeight = 1f;
-    [SerializeField] float bloodSpatterRaycastDistance = 5f;
-    [SerializeField] int bloodSpatterRaycastCount = 3;
-    [SerializeField] float bloodSpatterRaycastRadius = 0.5f;
-    [SerializeField] float bloodSpatterRaycastAngleJitter = 15f;
     [SerializeField] float bloodSpatterSpawnHeight = 1f;
-    [SerializeField] float bloodSpatterSurfaceOffset = 0.01f;
-    [SerializeField] Vector3 bloodPuddleLocalUp = Vector3.up;
+    [SerializeField] LayerMask bloodPuddleFloorLayers = ~0;
+    [SerializeField] float bloodPuddleRaycastHeight = 1f;
+    [SerializeField] float bloodPuddleRaycastDistance = 5f;
+    [SerializeField] float bloodPuddleSurfaceOffset = 0.01f;
 
     protected abstract class EnemyState
     {
@@ -135,16 +131,16 @@ public class Enemy : MonoBehaviour, IDamageable
 
         if (spawnBloodOnHit)
         {
-            SpawnBloodSpatterFromEnemy();
-            SpawnBloodPuddles();
+            SpawnBloodSpatter();
+            SpawnBloodPuddle();
         }
 
         if (currentHealth <= 0)
         {
             if (spawnBloodOnDeath)
             {
-                SpawnBloodSpatterFromEnemy();
-                SpawnBloodPuddles();
+                SpawnBloodSpatter();
+                SpawnBloodPuddle();
             }
 
             Die();
@@ -157,7 +153,30 @@ public class Enemy : MonoBehaviour, IDamageable
         Destroy(gameObject); 
     }
 
-    private void SpawnBloodSpatterFromEnemy()
+    private void SpawnBloodPuddle()
+    {
+        if (bloodPuddlePrefab == null)
+        {
+            return;
+        }
+
+        Vector3 origin = transform.position + Vector3.up * bloodPuddleRaycastHeight;
+        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, bloodPuddleRaycastDistance, bloodPuddleFloorLayers, QueryTriggerInteraction.Ignore))
+        {
+            Quaternion baseRotation = Quaternion.FromToRotation(Vector3.up, hit.normal);
+            Quaternion randomRotation = Quaternion.AngleAxis(Random.Range(0f, 360f), hit.normal);
+            Vector3 spawnPosition = hit.point + hit.normal * bloodPuddleSurfaceOffset;
+            GameObject spatter = Instantiate(bloodPuddlePrefab, spawnPosition, randomRotation * baseRotation);
+
+            BloodSpatter spatterComponent = spatter.GetComponent<BloodSpatter>();
+            if (spatterComponent != null)
+            {
+                spatterComponent.SetSurfaceNormal(hit.normal);
+            }
+        }
+    }
+
+    private void SpawnBloodSpatter()
     {
         if (bloodSpatterPrefab == null)
         {
@@ -165,45 +184,15 @@ public class Enemy : MonoBehaviour, IDamageable
         }
 
         Vector3 spawnPosition = transform.position + Vector3.up * bloodSpatterSpawnHeight;
-        Quaternion spawnRotation = Random.rotation;
+        Vector2 planar = Random.insideUnitCircle;
+        if (planar.sqrMagnitude < 0.0001f)
+        {
+            planar = Vector2.up;
+        }
+
+        Vector3 direction = new Vector3(planar.x, 0f, planar.y).normalized;
+        Quaternion spawnRotation = Quaternion.LookRotation(direction, Vector3.up);
         Instantiate(bloodSpatterPrefab, spawnPosition, spawnRotation);
-    }
-
-    private void SpawnBloodPuddles()
-    {
-        if (bloodPuddlePrefab == null)
-        {
-            return;
-        }
-
-        int rayCount = Mathf.Max(1, bloodSpatterRaycastCount);
-        float angleStep = 360f / rayCount;
-        Vector3 baseOrigin = transform.position + Vector3.up * bloodSpatterSpawnHeight;
-
-        for (int i = 0; i < rayCount; i++)
-        {
-            float angle = (angleStep * i) + Random.Range(-bloodSpatterRaycastAngleJitter, bloodSpatterRaycastAngleJitter);
-            float radians = angle * Mathf.Deg2Rad;
-            Vector3 planarOffset = new Vector3(Mathf.Cos(radians), 0f, Mathf.Sin(radians)) * bloodSpatterRaycastRadius;
-            Vector3 targetPoint = transform.position + planarOffset + Vector3.down * bloodSpatterRaycastDistance;
-            Vector3 direction = targetPoint - baseOrigin;
-            float maxDistance = direction.magnitude;
-
-            if (Physics.Raycast(baseOrigin, direction.normalized, out RaycastHit hit, maxDistance, bloodSpatterFloorLayers, QueryTriggerInteraction.Ignore))
-            {
-                Vector3 localUp = bloodPuddleLocalUp.sqrMagnitude < 0.0001f ? Vector3.up : bloodPuddleLocalUp.normalized;
-                Quaternion baseRotation = Quaternion.FromToRotation(localUp, hit.normal);
-                Quaternion randomRotation = Quaternion.AngleAxis(Random.Range(0f, 360f), hit.normal);
-                Vector3 spawnPosition = hit.point + hit.normal * bloodSpatterSurfaceOffset;
-                GameObject spatter = Instantiate(bloodPuddlePrefab, spawnPosition, randomRotation * baseRotation);
-
-                BloodSpatter spatterComponent = spatter.GetComponent<BloodSpatter>();
-                if (spatterComponent != null)
-                {
-                    spatterComponent.SetSurfaceNormal(hit.normal);
-                }
-            }
-        }
     }
 
     protected virtual EnemyState CreateRootState()

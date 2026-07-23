@@ -32,18 +32,43 @@ public class PlayerController : MonoBehaviour
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
+    [Header("Mantle")]
+    [SerializeField] bool enableMantle = true;
+    [SerializeField] LayerMask mantleLayers = ~0;
+    [SerializeField] float mantleForwardCheckDistance = 0.6f;
+    [SerializeField] float mantleLowerRayHeight = 0.6f;
+    [SerializeField] float mantleUpperRayHeight = 1.6f;
+    [SerializeField] float mantleMaxHeight = 1.5f;
+    [SerializeField] float mantleTopForwardOffset = 0.2f;
+    [SerializeField] float mantleTopDownExtra = 0.3f;
+    [SerializeField] float mantleSurfaceOffset = 0.05f;
+    [SerializeField] float mantleWallClearance = 0.2f;
+    [SerializeField] float mantleDuration = 0.15f;
+    [SerializeField] bool mantleUseKinematic = true;
+    [SerializeField] RigidbodyInterpolation mantleInterpolation = RigidbodyInterpolation.Interpolate;
+    [SerializeField] float mantleCooldown = 0.2f;
+
     // References
     public Transform orientation;
     [SerializeField] private WallJump wallJump;
     public bool isDashing;
     Rigidbody rb;
+    CapsuleCollider capsule;
     Vector2 moveInput;
     int remainingJumps;
     bool wasGrounded;
+    float lastMantleTime;
+    bool isMantling;
+    float mantleTimer;
+    Vector3 mantleStart;
+    Vector3 mantleTarget;
+    bool mantleWasKinematic;
+    RigidbodyInterpolation mantlePrevInterpolation;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        capsule = GetComponent<CapsuleCollider>();
         rb.freezeRotation = true;
         remainingJumps = maxJumpCount;
         if (wallJump == null)
@@ -69,7 +94,9 @@ public class PlayerController : MonoBehaviour
         // 2. Read Input
         moveInput = moveAction.action.ReadValue<Vector2>();
 
-        if (jumpAction.action.WasPressedThisFrame())
+        bool mantleTriggered = TryMantle();
+
+        if (!mantleTriggered && !isMantling && jumpAction.action.WasPressedThisFrame())
         {
             if (wallJump != null && wallJump.TryWallJump())
             {
@@ -102,6 +129,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isMantling)
+        {
+            UpdateMantle();
+            return;
+        }
+
         MovePlayer();
         ApplyExtraGravity(); // Apply the "heavy" feel
     }
@@ -194,4 +227,97 @@ public class PlayerController : MonoBehaviour
     
     // Public accessor for Camera script
     public bool IsGrounded() => isGrounded;
+
+    private bool TryMantle()
+    {
+        if (!enableMantle || isGrounded || isDashing || isMantling || moveInput.y <= 0.1f)
+        {
+            return false;
+        }
+
+        if (Time.time - lastMantleTime < mantleCooldown)
+        {
+            return false;
+        }
+
+        Vector3 forward = orientation != null ? orientation.forward : transform.forward;
+        Vector3 lowerOrigin = transform.position + Vector3.up * mantleLowerRayHeight;
+        if (!Physics.Raycast(lowerOrigin, forward, out RaycastHit lowerHit, mantleForwardCheckDistance, mantleLayers, QueryTriggerInteraction.Ignore))
+        {
+            return false;
+        }
+
+        Vector3 upperOrigin = transform.position + Vector3.up * mantleUpperRayHeight;
+        if (Physics.Raycast(upperOrigin, forward, mantleForwardCheckDistance, mantleLayers, QueryTriggerInteraction.Ignore))
+        {
+            return false;
+        }
+
+        Vector3 topOrigin = lowerHit.point + Vector3.up * mantleMaxHeight + forward * mantleTopForwardOffset;
+        float downDistance = mantleMaxHeight + mantleTopDownExtra;
+        if (!Physics.Raycast(topOrigin, Vector3.down, out RaycastHit topHit, downDistance, mantleLayers, QueryTriggerInteraction.Ignore))
+        {
+            return false;
+        }
+
+        if (Vector3.Angle(Vector3.up, topHit.normal) > maxSlopeAngle)
+        {
+            return false;
+        }
+
+        float halfHeight = capsule != null ? capsule.bounds.extents.y : playerHeight * 0.5f;
+        float wallOffset = capsule != null ? capsule.radius : 0.3f;
+        Vector3 targetPosition = topHit.point
+            + Vector3.up * (halfHeight + mantleSurfaceOffset)
+            - lowerHit.normal * (wallOffset + mantleWallClearance);
+        StartMantle(targetPosition);
+        return true;
+    }
+
+    private void StartMantle(Vector3 targetPosition)
+    {
+        isMantling = true;
+        mantleTimer = 0f;
+        mantleStart = rb.position;
+        mantleTarget = targetPosition;
+        rb.linearVelocity = Vector3.zero;
+        rb.useGravity = false;
+        mantleWasKinematic = rb.isKinematic;
+        mantlePrevInterpolation = rb.interpolation;
+        if (mantleUseKinematic)
+        {
+            rb.isKinematic = true;
+        }
+        rb.interpolation = mantleInterpolation;
+        remainingJumps = maxJumpCount;
+        lastMantleTime = Time.time;
+    }
+
+    private void UpdateMantle()
+    {
+        if (mantleDuration <= 0f)
+        {
+            rb.position = mantleTarget;
+            FinishMantle();
+            return;
+        }
+
+        mantleTimer += Time.fixedDeltaTime;
+        float t = Mathf.Clamp01(mantleTimer / mantleDuration);
+        float eased = t * t * (3f - 2f * t);
+        rb.MovePosition(Vector3.Lerp(mantleStart, mantleTarget, eased));
+
+        if (t >= 1f)
+        {
+            FinishMantle();
+        }
+    }
+
+    private void FinishMantle()
+    {
+        isMantling = false;
+        rb.useGravity = true;
+        rb.isKinematic = mantleWasKinematic;
+        rb.interpolation = mantlePrevInterpolation;
+    }
 }
